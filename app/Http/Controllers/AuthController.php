@@ -56,6 +56,7 @@ class AuthController extends Controller
         } else {
 
             $data->name = $request->username;
+            $data->about = 'Update About You';
             $data->email = $request->email;
             $data->user_type = $request->user_type;
             $data->profile_pic = $profilePicture;

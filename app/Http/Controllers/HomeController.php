@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Applications;
 use App\Models\jobs;
+use App\Models\Messages;
 use App\Models\SavedJobs;
 use App\Models\tags;
 use App\Models\User;
+use Illuminate\Console\Application;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -18,7 +21,39 @@ class HomeController extends Controller
     {
         $data = jobs::orderBy('created_at', 'desc')->paginate(8);
 
-        return view('frontend.index', compact('data'));
+        $tags2 = tags::orderBy('created_at', 'asc')->paginate(6);
+
+        return view('frontend.index', compact('data', 'tags2'));
+    }
+
+    //Categories Function
+    public function Categories()
+    {
+        $data = tags::orderBy('created_at', 'desc')->get();
+
+        $count = tags::orderBy('created_at', 'desc')->count();
+
+        return view('frontend.userpages.categories', compact('data', 'count'));
+    }
+
+    //View_more Function
+    public function View_more()
+    {
+        $data = jobs::orderBy('created_at', 'desc')->get();
+
+        $count = jobs::orderBy('created_at', 'desc')->count();
+
+        return view('frontend.userpages.morejobs', compact('data', 'count'));
+    }
+
+    //Category Jobs Function
+    public function Category($id)
+    {
+        $data = jobs::where('category', $id)->orderBy('created_at', 'desc')->get();
+
+        $count = jobs::where('category', $id)->count();
+
+        return view('frontend.userpages.morejobs', compact('data', 'count'));
     }
 
     //Profile Function
@@ -30,8 +65,10 @@ class HomeController extends Controller
 
         $saved_job = SavedJobs::where('applicant_id', Auth::user()->id)->where('saved_status', 1)->orderBy('created_at', 'desc')->paginate(10);
 
+        $message_no = Messages::where('applicant_id', Auth::user()->id)->count();
 
-        return view('frontend.userpages.profile', compact('data', 'job_data', 'saved_job'));
+
+        return view('frontend.userpages.profile', compact('data', 'job_data', 'saved_job', 'message_no'));
     }
 
     //Create_job
@@ -107,6 +144,18 @@ class HomeController extends Controller
 
         if ($job->created_user == Auth::user()->id) {
 
+            $saved_job = SavedJobs::where('job_id', $id)->get();
+
+            $applied_job = Applications::where('job_id', $id)->get();
+
+            foreach ($saved_job as $item) {
+                $item->delete();
+            }
+
+            foreach ($applied_job as $item2) {
+                $item2->delete();
+            }
+
             $job->delete();
 
             // Notify the user that the Job has been successfully Deleted from the database
@@ -148,13 +197,19 @@ class HomeController extends Controller
         $user_data = User::where('id', Auth::user()->id)->first();
         $Job_data = jobs::where('id', $id)->first();
 
-        $application_data = Applications::where('job_id', $id)->first();
+        $application_data = Applications::where('job_id', $id)->get();
 
 
         if ($application_data) {
-            if ($application_data->applicant_id == Auth::user()->id) {
-                Alert::error('Error', 'You have already applied for this job');
-                return redirect()->back();
+
+            foreach ($application_data as $item) {
+
+                // dd($item->applicant_id);
+
+                if ($item->applicant_id == Auth::user()->id) {
+                    Alert::error('Error', 'You have already applied for this job');
+                    return redirect()->back();
+                }
             }
         }
 
@@ -176,6 +231,11 @@ class HomeController extends Controller
             }
 
             $data->applicant_id = Auth::user()->id;
+            $data->applicant_email = Auth::user()->email;
+            $data->applicant_name = Auth::user()->name;
+            $data->applicant_about = Auth::user()->about;
+            $data->status = '0';
+            $data->applicant_profile_pic = Auth::user()->profile_pic;
             $data->job_id = $id;
             $data->job_poster_id = $Job_data->created_user;
             $data->Cv = $user_data->cv;
@@ -212,13 +272,16 @@ class HomeController extends Controller
     {
         $Job_data = jobs::where('id', $id)->first();
 
-        $application_data = SavedJobs::where('job_id', $id)->first();
-
+        $application_data = SavedJobs::where('job_id', $id)->get();
 
         if ($application_data) {
-            if ($application_data->applicant_id == Auth::user()->id) {
-                Alert::error('Error', 'You have already saved this job');
-                return redirect()->back();
+
+            foreach ($application_data as $item) {
+
+                if ($item->applicant_id == Auth::user()->id) {
+                    Alert::error('Error', 'You have already saved this job');
+                    return redirect()->back();
+                }
             }
         }
 
@@ -317,6 +380,182 @@ class HomeController extends Controller
             return redirect('profile');
         } else {
             Alert::error('Error', 'Server Error');
+            return redirect()->back();
+        }
+    }
+
+    //Job Applications
+    public function Applications($id)
+    {
+
+        $data = Applications::where('job_id', $id)->orderBy('created_at', 'desc')->paginate(20);
+
+        return view('frontend.userpages.applications', compact('data'));
+    }
+
+    //View Job Applications
+    public function view_application($id)
+    {
+
+        $data = Applications::findOrFail($id);
+
+        // dd($id);
+
+        return view('frontend.userpages.view_applications', compact('data'));
+    }
+
+    //Accept_application
+    public function Accept_application($id)
+    {
+
+        $data = Applications::findOrFail($id);
+
+        $message = new Messages();
+
+        $message->message = 'Congratulation!!! ' . $data->applicant_name;
+
+        $message->measage_body = "
+        I am writing to formally inform you that your application for " . $data->job_title . " at " . $data->company_name . " have been reviewed and we're pleased to announce to you that you have been selected for the role of " . $data->job_title . " at " . $data->company_name . "
+        We are thrilled to have you join our team and contribute to the company's success.
+        Other details will be communicated to you via your provided email address.
+        
+        Thank you!.";
+
+        $message->meassage_footer = 'Sincerly, ' . $data->company_name;
+
+        $message->applicant_id = $data->applicant_id;
+
+        $message->applicant_name = $data->applicant_name;
+
+        $message->job_id = $data->job_id;
+
+        $message->company_name = $data->company_name;
+
+        $message->application_id = $data->id;
+
+        $message->job_title = $data->job_title;
+
+        $message->company_logo = $data->company_logo;
+
+        $message->status = '2';
+
+        $data->status = '2';
+
+        $message->save();
+
+        $data->save();
+
+        Alert::success('Success', 'Job Accepted');
+        return redirect('profile');
+    }
+
+    //Reject_application
+    public function Reject_application($id)
+    {
+
+        $data = Applications::findOrFail($id);
+
+        $message = new Messages();
+
+        $message->message = 'Dear ' . $data->applicant_name;
+
+        $message->measage_body = "I trust this message finds you well. Thank you for your interest in the " . $data->job_title . " at " . $data->company_name . ". We appreciate the time and effort you invested in the application process.
+
+After careful consideration, we regret to inform you that we have chosen to move forward with other candidates for this particular " . $data->job_title . " opportunity. The decision was not easy, as we received many qualified applications.
+
+We genuinely appreciate your interest in joining " . $data->company_name . ", and we encourage you to explore other opportunities that align with your skills and career goals. We believe that your skills and experiences will undoubtedly contribute to your future success.
+
+Thank you once again for considering " . $data->company_name . ", and we wish you the best in all your future endeavors.";
+
+        $message->meassage_footer = 'Best Regards, ' . $data->company_name;
+
+        $message->applicant_id = $data->applicant_id;
+
+        $message->applicant_name = $data->applicant_name;
+
+        $message->job_id = $data->job_id;
+
+        $message->company_name = $data->company_name;
+
+        $message->application_id = $data->id;
+
+        $message->job_title = $data->job_title;
+
+        $message->company_logo = $data->company_logo;
+
+        $message->status = '1';
+
+        $message->save();
+
+        $data->delete();
+
+        Alert::success('Success', 'Job Rejected');
+        return redirect('profile');
+    }
+
+    //Get_messages
+    public function Get_messages()
+    {
+
+        $data = Messages::where('applicant_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+        $message_no = Messages::where('applicant_id', Auth::user()->id)->count();
+
+        return view('frontend.userpages.messages', compact('data', 'message_no'));
+    }
+
+    //View_message
+    public function View_message($id)
+    {
+
+        $data = Messages::findOrFail($id);
+
+        $message_no = Messages::where('applicant_id', Auth::user()->id)->count();
+
+        return view('frontend.userpages.view_message', compact('data', 'message_no'));
+    }
+
+    //Delete_message
+    public function Delete_message($id)
+    {
+        $data = Messages::findOrFail($id);
+
+        $check_owner = $data->applicant_id == Auth::user()->id;
+
+        if ($check_owner) {
+
+            $data->delete();
+
+            Alert::success('Success', 'Message  Deleted');
+            return redirect('get_messages');
+        } else {
+            Alert::error('Denied', 'Server Down');
+            return redirect()->back();
+        }
+    }
+
+    //Delete_application
+    public function Delete_application($id)
+    {
+        $data = Applications::findOrFail($id);
+
+        $check_owner = $data->applicant_id == Auth::user()->id;
+
+        $job_data = jobs::where('id', $data->job_id)->first();
+
+        $h = $job_data->applicants_count +- 1;
+
+        if ($check_owner) {
+
+            $data->delete();
+
+            $job_data->applicants_count = $h;
+
+            $job_data->save();
+
+            Alert::success('Success', 'Application  Deleted');
+            return redirect('profile');
+        } else {
+            Alert::error('Denied', 'Server Down');
             return redirect()->back();
         }
     }

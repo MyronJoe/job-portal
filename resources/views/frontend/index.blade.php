@@ -29,12 +29,12 @@
 
 
 <!-- Testimonial Start -->
-@include('frontend.includes.testimonial')
+<!-- @include('frontend.includes.testimonial') -->
 <!-- Testimonial End -->
 
 
 <!-- About Start -->
-@include('frontend.includes.about')
+<!-- @include('frontend.includes.about') -->
 <!-- About End -->
 
 

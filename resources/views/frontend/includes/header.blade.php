@@ -3,13 +3,13 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Job Portal Website</title>
+    <title>{{$settings->title}}</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <meta content="" name="{{$settings->seo}}">
+    <meta content="" name="{{$settings->about}}">
 
     <!-- Favicon -->
-    <link href="../../assets/frontend/img/favicon.ico" rel="icon">
+    <link href="../../../../assets/frontend/uploads/{{ $settings->fave_icon }}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

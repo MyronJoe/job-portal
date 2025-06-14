@@ -50,7 +50,7 @@
                 @endforeach
 
 
-                <a class="btn btn-primary py-3 px-5" href="#">Browse More Jobs</a>
+                <a class="btn btn-primary py-3 px-5" href="{{Route('view_more')}}">Browse More Jobs</a>
             </div>
 
         </div>

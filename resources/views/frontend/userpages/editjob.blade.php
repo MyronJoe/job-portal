@@ -18,6 +18,16 @@
 
                 <li class="breadcrumb-item"><a href="{{route('profile')}}" class="btn btn-secondary py-md-2 px-md-3 animated slideInRight">Profile</a></li>
 
+                @if (Route::has('login'))
+                @auth
+                @if (Auth::user()->user_type === 'Recruiter')
+
+                <li class="breadcrumb-item"><a href="{{route('applications', $job->id)}}" class="btn btn-success py-md-2 px-md-3 animated slideInRight">Applications</a></li>
+
+                @endif
+                @endauth
+                @endif
+
             </ol>
         </nav>
     </div>
@@ -130,12 +140,12 @@
                                 <div class="form-floating">
                                     <select name="experience" id="experience" class="form-control">
                                         <option value="{{ $job->experience }}">{{ $job->experience }}</option>
-                                        
+
                                         <option value="none">none</option>
                                         <option value="Junior">Junior</option>
                                         <option value="Mid">Mid</option>
                                         <option value="Senior">Senior</option>
-                                       
+
                                     </select>
 
                                 </div>

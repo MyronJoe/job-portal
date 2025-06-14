@@ -8,7 +8,7 @@
                         <i class="fa fa-search text-primary"></i>
                     </div>
                     <input type="text" class="form-control border-0 "
-                        placeholder="job Title, Keyword or company" />
+                        placeholder="job Title or Keyword" />
                 </div>
                 <div class="col-md-5" style="display: flex; align-items: center;">
                     <div style="width: 18px;">

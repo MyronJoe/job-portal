@@ -5,7 +5,15 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Bank Admin</title>
+
+  <title>Admin - {{$settings->title}}</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="{{$settings->seo}}">
+  <meta content="" name="{{$settings->about}}">
+
+  <!-- Favicon -->
+  <link href="../../../../assets/frontend/uploads/{{ $settings->fave_icon }}" rel="icon">
+
   <!-- plugins:css -->
   <link rel="stylesheet" href="../../assets/backend/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="../../assets/backend/vendors/css/vendor.bundle.base.css">
@@ -21,5 +29,6 @@
   <!-- Layout styles -->
   <link rel="stylesheet" href="../../assets/backend/css/style.css">
   <!-- End layout styles -->
-  <link rel="shortcut icon" href="../../assets/backend/images/favicon.png" />
+
+
 </head>

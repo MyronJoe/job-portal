@@ -7,15 +7,11 @@
                 <div class="container">
                     <div class="row justify-content-start">
                         <div class="col-10 col-lg-8">
-                            <h1 class="display-3 text-white animated slideInDown mb-4">Find The Perfect Job That
-                                You Deserved</h1>
-                            <p class="fs-5 fw-medium text-white mb-4 pb-2">Vero elitr justo clita lorem. Ipsum
-                                dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd
-                                rebum sea elitr.</p>
-                            <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Search
-                                A Job</a>
-                            <a href="" class="btn btn-secondary py-md-3 px-md-5 animated slideInRight">Find A
-                                Talent</a>
+                            <h1 class="display-3 text-white animated slideInDown mb-4">Find The Perfect Job That You Deserved</h1>
+                         
+                            <a href="{{Route('view_more')}}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Search A Job</a>
+
+                            <a href="{{Route('categories')}}" class="btn btn-secondary py-md-3 px-md-5 animated slideInRight">View Categories</a>
                         </div>
                     </div>
                 </div>
@@ -28,15 +24,11 @@
                 <div class="container">
                     <div class="row justify-content-start">
                         <div class="col-10 col-lg-8">
-                            <h1 class="display-3 text-white animated slideInDown mb-4">Find The Best Startup Job
-                                That Fit You</h1>
-                            <p class="fs-5 fw-medium text-white mb-4 pb-2">Vero elitr justo clita lorem. Ipsum
-                                dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd
-                                rebum sea elitr.</p>
-                            <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Search
-                                A Job</a>
-                            <a href="" class="btn btn-secondary py-md-3 px-md-5 animated slideInRight">Find A
-                                Talent</a>
+                            <h1 class="display-3 text-white animated slideInDown mb-4">Find The Best Startup Job That Fit You</h1>
+                           
+                             <a href="{{Route('view_more')}}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Search A Job</a>
+
+                            <a href="{{Route('categories')}}" class="btn btn-secondary py-md-3 px-md-5 animated slideInRight">View Categories</a>
                         </div>
                     </div>
                 </div>

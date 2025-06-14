@@ -33,10 +33,10 @@
     <!-- partial:partials/_footer.html -->
     <footer class="footer">
         <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Job Portal
+            <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © {{$settings->logo_name}}
                 2025</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"><a
-                    href="/" target="_blank">Job Portal</a></span>
+                    href="/" target="_blank">{{$settings->logo_name}}</a></span>
         </div>
     </footer>
     <!-- partial -->

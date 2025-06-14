@@ -47,7 +47,7 @@
                                             <a href="{{route('edit_category', $category->id)}}" class="badge badge-outline-primary">Edit</a>
                                         </td>
                                         <td>
-                                            <a href="{{route('delete_category', $category->id)}}" class="badge badge-outline-danger">Delete</a>
+                                            <a onclick="confirmation(event)" href="{{route('delete_category', $category->id)}}" class="badge badge-outline-danger">Delete</a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -93,6 +93,52 @@
 
 
 </div>
+
+<style>
+    .swal2-modal .swal2-title {
+        color: black !important;
+    }
+
+    .swal2-icon.swal2-warning {
+        margin-top: 20px;
+    }
+
+    .swal2-icon.swal2-success {
+        margin-top: 20px;
+    }
+</style>
+
+<script>
+    function confirmation(e) {
+
+        e.preventDefault();
+        var link = e.currentTarget.getAttribute('href');
+
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "To Deleted This Data!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'No',
+            confirmButtonText: 'Yes, Delete!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Swal.fire(
+                // 	'Deleted!',
+                // 	'Data Has Been Deleted Successfully.',
+                // 	'success'
+                // )
+                window.location.href = link
+            }
+        });
+
+    }
+</script>
+
+<script src="assets/backend/js/sweetalert2.all.min.js"></script>
 <!-- container-scroller -->
 <!-- plugins:js -->
 <script src="../../assets/backend/vendors/js/vendor.bundle.base.js"></script>
