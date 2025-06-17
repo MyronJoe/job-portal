@@ -585,7 +585,7 @@ Thank you once again for considering " . $data->company_name . ", and we wish yo
             Alert::success('Success', 'Application  Deleted');
             return redirect('profile');
         } else {
-            Alert::error('Denied', 'Server Down');
+            Alert::error('Denied', 'Server Not Responding');
             return redirect()->back();
         }
     }

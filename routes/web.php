@@ -30,7 +30,6 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/categories', 'Categories')->name('categories');
 
     Route::get('/searchTerm', 'SearchTerm')->name('searchTerm');
-
 });
 
 // Here are the Auth Routes
@@ -51,7 +50,7 @@ Route::controller(AuthController::class)->group(function () {
 
 
 // Here are the Home Routes That Must be logged in b4 Access (using auth middleware)
-Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
 
     Route::controller(HomeController::class)->group(function () {
 
@@ -82,11 +81,11 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
         Route::get('/reject_application/{id}', 'Reject_application')->name('reject_application');
 
         Route::get('/get_messages', 'Get_messages')->name('get_messages');
-        
+
         Route::get('/view_message/{id}', 'View_message')->name('view_message');
-        
+
         Route::get('/delete_message/{id}', 'Delete_message')->name('delete_message');
-        
+
         Route::get('/delete_application/{id}', 'Delete_application')->name('delete_application');
 
         Route::get('/saved_jobs', 'Saved_jobs')->name('saved_jobs');
@@ -94,8 +93,6 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
         Route::get('/applied_jobs', 'Applied_jobs')->name('applied_jobs');
 
         Route::get('/created_jobs', 'Created_jobs')->name('created_jobs');
-
-
     });
 
     Route::controller(AuthController::class)->group(function () {
@@ -103,10 +100,11 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
         Route::get('user_settings/{id}', 'User_settings')->name('user_settings');
 
         Route::post('user_update', 'User_update')->name('user_update');
-
-
     });
+});
 
+Route::middleware(['auth:sanctum', 'onlyadmin',  config('jetstream.auth_session')])->group(function () {
+    //================ADMIN USERS ALL ROUTES============================================
 
     Route::controller(AdminController::class)->group(function () {
 
@@ -143,17 +141,5 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
         Route::get('settings', 'Settings')->name('settings');
 
         Route::post('/save_settings/{id}', 'Save_settings')->name('save_settings');
-
-
     });
-});
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
 });
