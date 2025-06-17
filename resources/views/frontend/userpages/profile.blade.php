@@ -158,7 +158,7 @@
                                     </div>
                                     @endforeach
 
-                                    <a class="btn btn-primary py-3 px-5" href="#">View More</a>
+                                    <a class="btn btn-primary py-3 px-5" href="{{Route('created_jobs')}}">View More</a>
                                 </div>
                             </div>
                         </div>
@@ -223,7 +223,7 @@
 
 
 
-                                    <a class="btn btn-primary py-3 px-5" href="#">View More</a>
+                                    <a class="btn btn-primary py-3 px-5" href="{{Route('saved_jobs')}}">View More</a>
                                 </div>
                             </div>
                         </div>
@@ -291,9 +291,8 @@
                                     </div>
                                     @endforeach
 
-
-
-                                    <a class="btn btn-primary py-3 px-5" href="#">View More</a>
+                                    <a class="btn btn-primary py-3 px-5" href="{{Route('applied_jobs')}}">View More</a>
+                                    
                                 </div>
                             </div>
                         </div>

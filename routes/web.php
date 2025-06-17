@@ -29,6 +29,8 @@ Route::controller(HomeController::class)->group(function () {
 
     Route::get('/categories', 'Categories')->name('categories');
 
+    Route::get('/searchTerm', 'SearchTerm')->name('searchTerm');
+
 });
 
 // Here are the Auth Routes
@@ -86,6 +88,12 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
         Route::get('/delete_message/{id}', 'Delete_message')->name('delete_message');
         
         Route::get('/delete_application/{id}', 'Delete_application')->name('delete_application');
+
+        Route::get('/saved_jobs', 'Saved_jobs')->name('saved_jobs');
+
+        Route::get('/applied_jobs', 'Applied_jobs')->name('applied_jobs');
+
+        Route::get('/created_jobs', 'Created_jobs')->name('created_jobs');
 
 
     });

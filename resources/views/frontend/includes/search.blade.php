@@ -1,5 +1,6 @@
 <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
-    <form action="">
+    <form action="{{Route('searchTerm')}}" method="Get">
+        @csrf
         <div class="container">
             <div class="row g-2 bg-white p-3 rounded form-cont">
 
@@ -8,13 +9,14 @@
                         <i class="fa fa-search text-primary"></i>
                     </div>
                     <input type="text" class="form-control border-0 "
-                        placeholder="job Title or Keyword" />
+                        placeholder="job Title or Keyword" name="keyword" />
                 </div>
+
                 <div class="col-md-5" style="display: flex; align-items: center;">
                     <div style="width: 18px;">
                         <i class="fa fa-map-marker-alt text-primary"></i>
                     </div>
-                    <input type="text" class="form-control border-0 " placeholder="country/city" />
+                    <input type="text" class="form-control border-0 " placeholder="country/city" name="country" />
                 </div>
 
                 <div class="col-md-2">

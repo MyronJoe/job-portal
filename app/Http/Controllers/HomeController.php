@@ -46,6 +46,36 @@ class HomeController extends Controller
         return view('frontend.userpages.morejobs', compact('data', 'count'));
     }
 
+    //Saved_jobs Function
+    public function Saved_jobs()
+    {
+        $data = SavedJobs::where('applicant_id', Auth::user()->id)->where('saved_status', 1)->orderBy('created_at', 'desc')->get();
+
+        $count = SavedJobs::where('applicant_id', Auth::user()->id)->where('saved_status', 1)->orderBy('created_at', 'desc')->count();
+
+        return view('frontend.userpages.morejobs', compact('data', 'count'));
+    }
+
+    //Applied_jobs Function
+    public function Applied_jobs()
+    {
+        $data = Applications::where('applicant_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+
+        $count = Applications::where('applicant_id', Auth::user()->id)->orderBy('created_at', 'desc')->count();
+
+        return view('frontend.userpages.morejobs', compact('data', 'count'));
+    }
+
+    //Created_jobs Function
+    public function Created_jobs()
+    {
+        $data = jobs::where('created_user', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+
+        $count = jobs::where('created_user', Auth::user()->id)->orderBy('created_at', 'desc')->count();
+
+        return view('frontend.userpages.morejobs', compact('data', 'count'));
+    }
+
     //Category Jobs Function
     public function Category($id)
     {
@@ -59,11 +89,11 @@ class HomeController extends Controller
     //Profile Function
     public function Profile()
     {
-        $data = jobs::where('created_user', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(20);
+        $data = jobs::where('created_user', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(10);
 
-        $job_data = Applications::where('applicant_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(10);
+        $job_data = Applications::where('applicant_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(6);
 
-        $saved_job = SavedJobs::where('applicant_id', Auth::user()->id)->where('saved_status', 1)->orderBy('created_at', 'desc')->paginate(10);
+        $saved_job = SavedJobs::where('applicant_id', Auth::user()->id)->where('saved_status', 1)->orderBy('created_at', 'desc')->paginate(6);
 
         $message_no = Messages::where('applicant_id', Auth::user()->id)->count();
 
@@ -542,7 +572,7 @@ Thank you once again for considering " . $data->company_name . ", and we wish yo
 
         $job_data = jobs::where('id', $data->job_id)->first();
 
-        $h = $job_data->applicants_count +- 1;
+        $h = $job_data->applicants_count + -1;
 
         if ($check_owner) {
 
@@ -558,5 +588,65 @@ Thank you once again for considering " . $data->company_name . ", and we wish yo
             Alert::error('Denied', 'Server Down');
             return redirect()->back();
         }
+    }
+
+    //SearchTerm
+    public function SearchTerm(Request $request)
+    {
+
+        $input1 = $request->keyword;
+
+        $input2 = $request->country;
+
+        if ($input1 AND !$input2) {
+            $jobs = jobs::where('category', 'like', '%' . $input1 . '%')->get();
+
+            $count = jobs::where('category', 'like', '%' . $input1 . '%')->count();
+
+            if ($jobs) {
+
+                $data = $jobs;
+
+                return view('frontend.userpages.morejobs', compact('data', 'count'));
+            } else {
+                Alert::error('Denied', 'No Data Found');
+                return redirect()->back();
+            }
+
+        }elseif($input2 AND !$input1){
+
+            $jobs = jobs::where('country', 'like', '%' . $input2 . '%')->get();
+
+            $count = jobs::where('country', 'like', '%' . $input2 . '%')->count();
+
+            if ($jobs) {
+
+                $data = $jobs;
+
+                return view('frontend.userpages.morejobs', compact('data', 'count'));
+            } else {
+                Alert::error('Denied', 'No Data Found');
+                return redirect()->back();
+            }
+        }elseif($input2 AND $input1){
+
+            $jobs = jobs::where('country', 'like', '%' . $input2 . '%')->where('category', 'like', '%' . $input1 . '%')->get();
+
+            $count = jobs::where('country', 'like', '%' . $input2 . '%')->where('category', 'like', '%' . $input1 . '%')->count();
+
+            if ($jobs) {
+
+                $data = $jobs;
+
+                return view('frontend.userpages.morejobs', compact('data', 'count'));
+            } else {
+                Alert::error('Denied', 'No Data Found');
+                return redirect()->back();
+            }
+        }else{
+           return redirect()->back(); 
+        }
+
+        // dd($data);
     }
 }

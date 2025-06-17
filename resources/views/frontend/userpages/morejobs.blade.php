@@ -46,6 +46,9 @@
                                     <span class="text-truncate me-2 comp-detail"><i
                                             class="fa fa-briefcase text-primary me-2"></i>{{$job->experience}} Level</span>
 
+                                    <span class="text-truncate me-2 comp-detail"><i
+                                            class="fa fa-briefcase text-primary me-2"></i>{{$job->category}}</span>
+
                                     <span class="text-truncate me-2 comp-detail ml-2"><i
                                             class="far fa-calendar-alt text-primary me-2"></i>{{$job->created_at->diffForHumans()}}</span>
 
