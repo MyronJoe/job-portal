@@ -72,7 +72,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
         Route::get('/unsave_job/{id}', 'Unsave_job')->name('unsave_job');
 
-        Route::get('/applications/{id}', 'Applications')->name('applications');
+        Route::get('/job-applications/{id}', 'Job_applications')->name('job-applications');
 
         Route::get('/view_application/{id}', 'View_application')->name('view_application');
 

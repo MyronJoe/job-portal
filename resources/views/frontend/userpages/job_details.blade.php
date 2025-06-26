@@ -42,7 +42,7 @@
                         <span class="text-truncate comp-detail2 me-2"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{$data->city}}, {{$data->country}}</span>
                         <span class="text-truncate comp-detail2 me-2"><i class="far fa-clock text-primary me-2"></i>{{$data->job_type}}</span>
                         <span class="text-truncate comp-detail2 me-2"><i class="far fa-money-bill-alt text-primary me-2"></i>${{$data->min_salary}} -
-                            ${{$data->min_salary}}</span>
+                            ${{$data->max_salary}}</span>
                         <span class="text-truncate comp-detail2 me-2"><i class="fa fa-briefcase text-primary me-2"></i>{{$data->experience}} Level</span>
 
                         <span class="text-truncate comp-detail2 me-2 ml-2"><i

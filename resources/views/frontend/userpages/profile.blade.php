@@ -137,7 +137,7 @@
                                                                 class="far fa-clock text-primary me-2"></i>{{$job->job_type}}</span>
                                                         <span class="text-truncate me-2 comp-detail"><i
                                                                 class="far fa-money-bill-alt text-primary me-2"></i>${{$job->min_salary}} -
-                                                            ${{$job->min_salary}}</span>
+                                                            ${{$job->max_salary}}</span>
 
 
                                                         <span class="text-truncate me-2 comp-detail"><i
@@ -200,7 +200,7 @@
                                                                 class="far fa-clock text-primary me-2"></i>{{$job2->job_type}}</span>
                                                         <span class="text-truncate me-2 comp-detail"><i
                                                                 class="far fa-money-bill-alt text-primary me-2"></i>${{$job2->min_salary}} -
-                                                            ${{$job2->min_salary}}</span>
+                                                            ${{$job2->max_salary}}</span>
 
 
                                                         <span class="text-truncate me-2 comp-detail"><i
@@ -263,7 +263,7 @@
                                                                 class="far fa-clock text-primary me-2"></i>{{$job2->job_type}}</span>
                                                         <span class="text-truncate me-2 comp-detail"><i
                                                                 class="far fa-money-bill-alt text-primary me-2"></i>${{$job2->min_salary}} -
-                                                            ${{$job2->min_salary}}</span>
+                                                            ${{$job2->max_salary}}</span>
 
 
                                                         <span class="text-truncate me-2 comp-detail"><i

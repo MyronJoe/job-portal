@@ -22,7 +22,7 @@
                 @auth
                 @if (Auth::user()->user_type === 'Recruiter')
 
-                <li class="breadcrumb-item"><a href="{{route('applications', $job->id)}}" class="btn btn-success py-md-2 px-md-3 animated slideInRight">Applications</a></li>
+                <li class="breadcrumb-item"><a href="{{route('job-applications', $job->id)}}" class="btn btn-success py-md-2 px-md-3 animated slideInRight">Applications</a></li>
 
                 @endif
                 @endauth

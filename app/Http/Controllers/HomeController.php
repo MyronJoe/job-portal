@@ -21,7 +21,7 @@ class HomeController extends Controller
     //Home Function
     public function Home()
     {
-        $data = jobs::orderBy('created_at', 'desc')->paginate(8);
+        $data = jobs::orderBy('created_at', 'desc')->paginate(6);
 
         $tags2 = tags::orderBy('created_at', 'asc')->paginate(6);
 
@@ -310,7 +310,7 @@ class HomeController extends Controller
                 'last_line' => 'Sincerely, © ' . $Job_data->company_name,
             ];
 
-            Notification::send($mailer, new JobNotification($details));
+            // Notification::send($mailer, new JobNotification($details));
 
             Alert::success('Success', 'Application Sent');
             return redirect()->back();
@@ -435,7 +435,7 @@ class HomeController extends Controller
     }
 
     //Job Applications
-    public function Applications($id)
+    public function Job_applications($id)
     {
 
         $data = Applications::where('job_id', $id)->orderBy('created_at', 'desc')->paginate(20);
