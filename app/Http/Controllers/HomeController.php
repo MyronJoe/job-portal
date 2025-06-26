@@ -8,10 +8,12 @@ use App\Models\Messages;
 use App\Models\SavedJobs;
 use App\Models\tags;
 use App\Models\User;
+use App\Notifications\JobNotification;
 use Illuminate\Console\Application;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class HomeController extends Controller
@@ -291,6 +293,24 @@ class HomeController extends Controller
             $Job_data->save();
 
             $data->save();
+
+            $mailer = Auth::user();
+
+            $details = [
+                'greeting' => 'Dear ' . Auth::user()->name,
+
+                'first_line' => 'The Recruiting Team ' . $Job_data->company_name,
+
+                'body' => "You have successfully submitted your application for the following position: "
+                    .$Job_data->job_title.
+                ", Someone will review your qualifications shortly. If your profile meets our requirements, we will contact you to discuss the next steps in the application process.",
+
+                'next_last_line' => 'Thank you for your interest in ' . $Job_data->company_name,
+
+                'last_line' => 'Sincerely, © ' . $Job_data->company_name,
+            ];
+
+            Notification::send($mailer, new JobNotification($details));
 
             Alert::success('Success', 'Application Sent');
             return redirect()->back();
